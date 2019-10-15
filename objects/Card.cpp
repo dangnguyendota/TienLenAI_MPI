@@ -7,3 +7,7 @@
 Card::Card(BaseCard *card) {
     this->card = card;
 }
+
+int Card::compareTo(Card *card) {
+    return this->card->compareTo(card->card);
+}

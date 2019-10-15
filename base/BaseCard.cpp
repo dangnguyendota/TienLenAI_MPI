@@ -81,3 +81,15 @@ std::string BaseCard::toString() {
     }
     return val + type;
 }
+
+int BaseCard::compareTo(BaseCard *baseCard) {
+    if (this->getValue() == baseCard->getValue()) {
+        if (this->getType() == baseCard->getType()) return 0;
+        if (this->getType() > baseCard->getType()) return 1;
+        return -1;
+    }
+    return this->getValue() > baseCard->getValue() ? 1 : -1;
+
+}
+
+

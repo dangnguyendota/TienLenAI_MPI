@@ -35,13 +35,15 @@ private:
 public:
     BaseCard(int value, int type);
 
-    virtual int getValue();
+    int getValue();
 
-    virtual int getType();
+    int getType();
 
-    virtual bool equals(BaseCard *card);
+    bool equals(BaseCard *card);
 
-    virtual std::string toString();
+    std::string toString();
+
+    int compareTo(BaseCard *baseCard);
 };
 
 

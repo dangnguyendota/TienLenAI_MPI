@@ -8,13 +8,15 @@
 
 #include <string>
 #include <algorithm>
-#include "BaseObject.h"
+#include "../base/BaseObject.h"
 
 class Card : public BaseObject {
 private:
     BaseCard *card;
 public:
     Card(BaseCard *card);
+
+    int compareTo(Card *card);
 
     bool equals(BaseObject *object) override {
         if (dynamic_cast<Card *>(object) != nullptr) {
@@ -52,12 +54,8 @@ public:
     static void sort(std::vector<Card *> *cards) {
         std::sort(cards->begin(),
                   cards->end(),
-                  [](const Card *lhs, const Card *rhs) {
-                      if (lhs->card->getValue() == rhs->card->getValue()) {
-                          if (lhs->card->getType() == rhs->card->getType()) return false;
-                          return lhs->card->getType() <= rhs->card->getType();
-                      }
-                      return lhs->card->getValue() < rhs->card->getValue();
+                  [](Card *lhs, Card *rhs) {
+                      return lhs->card->compareTo(rhs->card) < 0;
                   });
     }
 
