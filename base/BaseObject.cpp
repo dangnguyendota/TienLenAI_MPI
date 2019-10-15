@@ -2,37 +2,42 @@
 // Created by mpiuser on 15/10/2019.
 //
 
-#include "vector"
-#include "string"
-#include "Card.cpp"
+#include "BaseObject.h"
+#include "BaseCard.h"
 
-using namespace std;
+std::string BaseObject::toString() {
+    return "BaseObject";
+}
 
-class BaseObject {
-    virtual ~BaseObject() = default;
 
-    virtual vector<const Card&> getCards() {
-    };
+bool BaseObject::beats(BaseObject *object) {
+    return false;
+}
 
-    virtual bool beats(const BaseObject& o){
+bool BaseObject::contains(int value) {
+    std::vector<BaseCard *> cards = this->getCards();
+    for (BaseCard *baseCard : cards) {
+        if (baseCard->getValue() == value) return true;
+    }
+    return false;
+}
 
-    };
+bool BaseObject::contains(BaseCard *card) {
+    std::vector<BaseCard *> cards = this->getCards();
+    for (BaseCard *baseCard : cards) {
+        if (baseCard->equals(card)) return true;
+    }
+    return false;
+}
 
-    virtual BaseObject getCopy(){
+BaseObject *BaseObject::getCopy() {
+    return nullptr;
+}
 
-    };
+std::vector<BaseCard *> BaseObject::getCards() {
+    return std::vector<BaseCard *>();
+}
 
-    virtual bool contains(const Card& card){
-
-    };
-
-    virtual bool contains(int value){
-
-    };
-
-    virtual string toString(){
-
-    };
-
-    virtual bool equals(const BaseObject& o);
-};
+bool BaseObject::equals(BaseObject *object) {
+    return false;
+}
