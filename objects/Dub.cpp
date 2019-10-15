@@ -27,3 +27,7 @@ int Dub::compareTo(Dub *dub) {
     if (this->maxType < dub->maxType) return -1;
     return this->minType < dub->minType ? -1 : 1;
 }
+
+int Dub::getMaxType() {
+    return this->maxType;
+}

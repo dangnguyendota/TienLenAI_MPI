@@ -11,15 +11,18 @@
 
 class Dub : public BaseObject {
 private:
-    BaseCard *card1;
-    BaseCard *card2;
     int maxType;
     int minType;
     int value;
 public:
+    BaseCard *card1;
+    BaseCard *card2;
+
     Dub(BaseCard *card1, BaseCard *card2);
 
     int getValue();
+
+    int getMaxType();
 
     int compareTo(Dub *dub);
 
@@ -68,6 +71,7 @@ public:
     static bool valid(BaseCard *card1, BaseCard *card2) {
         return card1->getValue() == card2->getValue();
     }
+
 };
 
 

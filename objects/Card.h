@@ -11,8 +11,6 @@
 #include "../base/BaseObject.h"
 
 class Card : public BaseObject {
-private:
-    BaseCard *card;
 public:
     Card(BaseCard *card);
 
@@ -59,6 +57,7 @@ public:
                   });
     }
 
+    BaseCard *card;
 };
 
 
