@@ -7,6 +7,7 @@
 
 
 #include <string>
+#include <algorithm>
 
 class BaseCard {
 public:
@@ -35,6 +36,8 @@ private:
 public:
     BaseCard(int value, int type);
 
+    BaseCard(std::string code);
+
     int getValue();
 
     int getType();
@@ -44,6 +47,12 @@ public:
     std::string toString();
 
     int compareTo(BaseCard *baseCard);
+
+    static std::vector<BaseCard *> deckOfCards();
+
+    static std::vector<BaseCard *> randomCards(std::vector<BaseCard *> container, int length);
+
+    static void sort(std::vector<BaseCard *> *sequence);
 };
 
 

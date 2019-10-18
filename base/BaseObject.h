@@ -1,5 +1,5 @@
 //
-// Created by mpiuser on 15/10/2019.
+// Created by mpiuser on 15/10/2019.return std::vector<BaseObject *>();
 //
 
 #ifndef MPIPROJECT_BASEOBJECT_H
@@ -13,20 +13,19 @@
 class BaseObject {
 public:
 
-    virtual std::vector<BaseCard*> getCards();
+    virtual std::vector<BaseCard *> getCards();
 
     virtual bool beats(BaseObject *object);
 
-    virtual BaseObject* getCopy();
+    virtual BaseObject *getCopy();
 
-    virtual bool contains(BaseCard *card);
+    virtual bool contains(BaseCard *card) final;
 
-    virtual bool contains(int value);
+    virtual bool contains(int value) final;
 
     virtual bool equals(BaseObject *object);
 
     virtual std::string toString();
-
 };
 
 

@@ -59,11 +59,11 @@ public:
         return (dub1->getValue() + 1 == dub2->getValue()) && (dub2->getValue() + 1 == dub3->getValue());
     }
 
-    static void sort(std::vector<TripSequence *> *sequence) {
+    static void sort(std::vector<BaseObject *> *sequence) {
         std::sort(sequence->begin(),
                   sequence->end(),
-                  [](TripSequence *lhs, TripSequence *rhs) {
-                      return lhs->compareTo(rhs) < 0;
+                  [](BaseObject *lhs, BaseObject *rhs) {
+                      return ((TripSequence *) lhs)->compareTo((TripSequence *) rhs) < 0;
                   });
     }
 };

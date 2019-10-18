@@ -8,6 +8,7 @@
 #include "Game.h"
 
 class Node {
+public:
     virtual Node *select(Game *game);
 
     virtual Node *expand(Game *game);
@@ -36,7 +37,7 @@ class Node {
 
     virtual void usingK();
 
-    void setK(double K);
+    virtual void setK(double K);
 };
 
 #endif //MPIPROJECT_NODE_H

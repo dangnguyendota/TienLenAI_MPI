@@ -15,6 +15,6 @@ Quads::Quads(BaseCard *card1, BaseCard *card2, BaseCard *card3, BaseCard *card4)
 }
 
 int Quads::compareTo(Quads *quads) {
-    if(this->value == quads->value) return 0;
+    if (this->value == quads->value) return 0;
     return this->value > quads->value ? 1 : -1;
 }

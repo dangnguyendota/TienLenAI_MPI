@@ -30,10 +30,10 @@ public:
     }
 
     bool beats(BaseObject *object) override {
-        if(dynamic_cast<DubSequence*>(object) != nullptr) {
-            auto *sequence = (DubSequence*) object;
-            if(this->minValue > sequence->minValue) return true;
-            if(this->minValue < sequence->minValue) return false;
+        if (dynamic_cast<DubSequence *>(object) != nullptr) {
+            auto *sequence = (DubSequence *) object;
+            if (this->minValue > sequence->minValue) return true;
+            if (this->minValue < sequence->minValue) return false;
             return this->maxType > sequence->maxType;
         }
         return false;
@@ -41,19 +41,19 @@ public:
 
 
     BaseObject *getCopy() override {
-        return new DubSequence((Dub*) dub1->getCopy(), (Dub*) dub2->getCopy());
+        return new DubSequence((Dub *) dub1->getCopy(), (Dub *) dub2->getCopy());
     }
 
     bool equals(BaseObject *object) override {
-        if(dynamic_cast<DubSequence*>(object) != nullptr) {
-            auto *sequence = (DubSequence*) object;
+        if (dynamic_cast<DubSequence *>(object) != nullptr) {
+            auto *sequence = (DubSequence *) object;
             return this->dub1->equals(sequence->dub1) && this->dub2->equals(sequence->dub2);
         }
         return false;
     }
 
     std::string toString() override {
-        return "{" + dub1->toString() +" " + dub2->toString() + "}";
+        return "{" + dub1->toString() + " " + dub2->toString() + "}";
     }
 
     static bool valid(Dub *dub1, Dub *dub2) {
@@ -61,11 +61,11 @@ public:
         return dub1->getValue() + 1 == dub2->getValue();
     }
 
-    static void sort(std::vector<DubSequence *> *sequence) {
+    static void sort(std::vector<BaseObject *> *sequence) {
         std::sort(sequence->begin(),
                   sequence->end(),
-                  [](DubSequence *lhs, DubSequence *rhs) {
-                      return lhs->compareTo(rhs) < 0;
+                  [](BaseObject *lhs, BaseObject *rhs) {
+                      return ((DubSequence *) lhs)->compareTo((DubSequence *) rhs) < 0;
                   });
     }
 };

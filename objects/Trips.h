@@ -58,11 +58,11 @@ public:
         return "{" + card1->toString() + " " + card2->toString() + " " + card3->toString() + "}";
     }
 
-    static void sort(std::vector<Trips *> *trips) {
+    static void sort(std::vector<BaseObject *> *trips) {
         std::sort(trips->begin(),
                   trips->end(),
-                  [](Trips *lhs, Trips *rhs) {
-                      return lhs->compareTo(rhs) < 0;
+                  [](BaseObject *lhs, BaseObject *rhs) {
+                      return ((Trips *) lhs)->compareTo((Trips *) rhs) < 0;
                   });
     }
 

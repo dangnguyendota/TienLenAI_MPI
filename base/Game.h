@@ -11,9 +11,10 @@
 #include "GameConfiguration.h"
 
 class Game {
+public:
     virtual void move(BaseObject *object);
 
-    virtual Player* getCurrentPlayer();
+    virtual Player *getCurrentPlayer();
 
     virtual int getCurrentPlayerIndex();
 
@@ -23,17 +24,17 @@ class Game {
 
     virtual int getMaxPlayer();
 
-    virtual Game* getCopy();
+    virtual Game *getCopy();
 
-    virtual std::vector<BaseObject> getAvailableMoves();
+    virtual std::vector<BaseObject *> getAvailableMoves();
 
     virtual bool end();
 
     virtual void playRandomly();
 
-    virtual Reward* getReward();
+    virtual Reward *getReward();
 
-    virtual void put(Player* player);
+    virtual void put(Player *player);
 
     virtual int size();
 
@@ -41,12 +42,13 @@ class Game {
 
     virtual void next();
 
-    virtual GameConfiguration* getConfig();
+    virtual GameConfiguration *getConfig();
 
     virtual void setConfig(GameConfiguration *config);
 
-    virtual Player* getPlayer(int index);
+    virtual Player *getPlayer(int index);
 
     virtual bool isPassed(int index);
 };
+
 #endif //MPIPROJECT_GAME_H

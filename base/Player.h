@@ -10,25 +10,26 @@
 #include "BaseObject.h"
 
 class Player {
-    virtual std::vector<BaseCard*> getStartCards();
+public:
+    virtual std::vector<BaseCard *> getStartCards();
 
-    virtual std::vector<BaseObject*> listAvailableMoves();
+    virtual std::vector<BaseObject *> listAvailableMoves();
 
-    virtual std::vector<BaseObject*> listAvailableMovesToAgainst(BaseObject *object);
+    virtual std::vector<BaseObject *> listAvailableMovesToAgainst(BaseObject *object);
 
     virtual void remove(BaseObject *object);
 
-    virtual void setCards(std::vector<BaseCard*> cards);
+    virtual void setCards(std::vector<BaseCard *> cards);
 
-    virtual Player* withCards(std::vector<BaseCard*> cards);
+    virtual Player *withCards(std::vector<BaseCard *> cards);
 
     virtual void setIndex(int index);
 
-    virtual void getIndex();
+    virtual int getIndex();
 
     virtual void scan();
 
-    virtual Player* getCopy();
+    virtual Player *getCopy();
 
     virtual bool isBot();
 
@@ -36,8 +37,11 @@ class Player {
 
     virtual int getCardLength();
 
-    virtual int getHeristicScore();
+    virtual int getHeuristicScore();
 
-    double getLosingScore();
+    virtual double getLosingScore();
+
+    virtual std::string toString();
 };
+
 #endif //MPIPROJECT_PLAYER_H

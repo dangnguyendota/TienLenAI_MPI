@@ -60,11 +60,12 @@ public:
         return false;
     }
 
-    static void sort(std::vector<Dub *> *dubs) {
+    static void sort(std::vector<BaseObject *> *dubs) {
         std::sort(dubs->begin(),
                   dubs->end(),
-                  [](Dub *lhs, Dub *rhs) {
-                      return lhs->compareTo(rhs) < 0;
+                  [](BaseObject *lhs, BaseObject *rhs) {
+
+                      return ((Dub *) lhs)->compareTo((Dub *) rhs) < 0;
                   });
     }
 

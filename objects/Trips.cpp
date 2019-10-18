@@ -6,7 +6,7 @@
 #include "Trips.h"
 
 Trips::Trips(BaseCard *card1, BaseCard *card2, BaseCard *card3) {
-    if(!valid(card1, card2, card3)) throw std::invalid_argument("Trips exception: cards have different values");
+    if (!valid(card1, card2, card3)) throw std::invalid_argument("Trips exception: cards have different values");
     this->card1 = card1;
     this->card2 = card2;
     this->card3 = card3;
