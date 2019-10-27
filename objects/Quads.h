@@ -32,7 +32,7 @@ public:
     }
 
     bool beats(BaseObject *object) override {
-        if (dynamic_cast<Quads *>(object) != nullptr) return this->value > ((Quads *) object)->value;
+        if (object->classCode() == BaseObject::code_quad) return this->value > ((Quads *) object)->value;
         if (dynamic_cast<TripSequence *>(object) != nullptr) return true;
         if (dynamic_cast<Dub *>(object) != nullptr) return ((Dub *) object)->getValue() == BaseCard::TWO;
         if (dynamic_cast<Card *>(object) != nullptr) return ((Card *) object)->card->getValue() == BaseCard::TWO;
@@ -44,7 +44,7 @@ public:
     }
 
     bool equals(BaseObject *object) override {
-        if (dynamic_cast<Quads *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_quad) {
             return this->value == ((Quads *) object)->value;
         }
         return false;
@@ -53,6 +53,10 @@ public:
     std::string toString() override {
         return "[" + card1->toString() + " " + card2->toString() + " " + card3->toString() + " " + card4->toString() +
                "]";
+    }
+
+    int classCode() override{
+        return BaseObject::code_quad;
     }
 
     static bool valid(BaseCard *card1, BaseCard *card2, BaseCard *card3, BaseCard *card4) {

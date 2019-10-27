@@ -8,6 +8,7 @@
 
 #include <map>
 #include "../base/Player.h"
+#include "../helper/HashMap.h"
 
 class TienLenPlayer : public Player {
 private:
@@ -15,7 +16,7 @@ private:
     bool bot = false;
     std::vector<BaseCard *> cards;
     std::vector<BaseObject *> list;
-    std::map<BaseObject *, std::vector<BaseObject *>> connectors;
+    HashMap connectors;
     int cardLength = 13;
     double score_lose = 0.0;
 

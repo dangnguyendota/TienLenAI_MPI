@@ -41,3 +41,7 @@ std::vector<BaseCard *> BaseObject::getCards() {
 bool BaseObject::equals(BaseObject *object) {
     return false;
 }
+
+int BaseObject::classCode() {
+    return BaseObject::code_baseobject;
+}

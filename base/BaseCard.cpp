@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <vector>
 #include "BaseCard.h"
+#include "../helper/Util.h"
 
 int BaseCard::getValue() {
     return this->value;
@@ -20,12 +21,12 @@ BaseCard::BaseCard(int value, int type) {
 }
 
 bool BaseCard::equals(BaseCard *card) {
-    return this->value == card->value && this->type == card->value;
+    return this->value == card->value && this->type == card->type;
 }
 
 std::string BaseCard::toString() {
-    std::string val = "";
-    std::string type = "";
+    std::string val;
+    std::string basicString;
     switch (this->value) {
         case ACE:
             val = "A";
@@ -69,19 +70,19 @@ std::string BaseCard::toString() {
     }
     switch (this->type) {
         case SPADE:
-            type = "♠";
+            basicString = "♠";
             break;
         case CLUB:
-            type = "♣";
+            basicString = "♣";
             break;
         case DIAMOND:
-            type = "♦";
+            basicString = "♦";
             break;
         case HEART:
-            type = "♥";
+            basicString = "♥";
             break;
     }
-    return val + type;
+    return val + basicString;
 }
 
 int BaseCard::compareTo(BaseCard *baseCard) {
@@ -159,7 +160,30 @@ std::vector<BaseCard *> BaseCard::deckOfCards() {
 }
 
 std::vector<BaseCard *> BaseCard::randomCards(std::vector<BaseCard *> container, int length) {
-    return std::vector<BaseCard *>();
+    if (container.size() <= length) return container;
+    std::vector<BaseCard *> cards;
+    cards.reserve(container.size());
+    for (BaseCard *card : container) cards.push_back(card);
+    int i = 0;
+    std::vector<BaseCard *> result;
+    while (i < length) {
+        int r = rand() % cards.size();
+        result.push_back(cards[r]);
+        Util::deleteElement(r, cards);
+        i++;
+    }
+    return result;
+}
+
+std::vector<BaseCard *>
+BaseCard::removeFrom(const std::vector<BaseCard *> &container, const std::vector<BaseCard *> &removed) {
+    std::vector<BaseCard *> cards;
+    cards.reserve(container.size());
+    for (BaseCard *card1 : container) cards.push_back(card1);
+    for (BaseCard *card : removed) {
+        Util::deleteElement(card, cards);
+    }
+    return cards;
 }
 
 void BaseCard::sort(std::vector<BaseCard *> *sequence) {
@@ -169,5 +193,7 @@ void BaseCard::sort(std::vector<BaseCard *> *sequence) {
                   return lhs->compareTo(rhs) < 0;
               });
 }
+
+
 
 

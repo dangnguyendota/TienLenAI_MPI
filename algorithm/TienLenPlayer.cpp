@@ -29,12 +29,13 @@ std::vector<BaseObject *> TienLenPlayer::listAvailableMovesToAgainst(BaseObject 
 }
 
 void TienLenPlayer::remove(BaseObject *object) {
+    if(object == nullptr) throw std::invalid_argument("object can't be null");
     std::vector<BaseObject *> connector = connectors[object];
     Util::deleteElement(object, this->list);
     this->cardLength -= object->getCards().size();
     if (cardLength < 0) throw std::invalid_argument("length of card can not less than 0");
     for (BaseObject *o : connector) {
-        bool flag = Util::deleteElement(object, list);
+        bool flag = Util::deleteElement(o, list);
         if (flag) calculateScore(o);
     }
 
@@ -87,7 +88,6 @@ void TienLenPlayer::scan() {
     Util::addAll(list, Finder::scan(cards, "TripSequence"));
     Util::addAll(list, Finder::scan(cards, "Quads"));
     Util::addAll(list, Finder::scan(cards, "QuadSequence"));
-
     for (int i = 0; i < list.size(); i++) {
         BaseObject *o = list[i];
         /* connector */
@@ -98,7 +98,7 @@ void TienLenPlayer::scan() {
                 connector.push_back(list[j]);
             }
         }
-        connectors[o] = connector;
+        connectors.push_back(o, connector);
 
         /* calculate score lose */
         if (dynamic_cast<Card *>(o) != nullptr) {

@@ -15,7 +15,7 @@ TienLenNode::TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game
     this->reward = new GameReward(game->getMaxPlayer());
     /* config node */
     if (parent != nullptr) {
-        this->setC(parent->getC());
+        this->C = parent->getC();
         this->usingKK = parent->usingKK;
         this->K = parent->K;
     }
@@ -86,9 +86,8 @@ void TienLenNode::removeUnnecessaryMoves(Game *game) {
 }
 
 Node *TienLenNode::select(Game *game) {
-    Node *selectedNode = this;
     if (game->end() || !this->unexploredMoves.empty()) return this;
-
+    Node *selectedNode = this;
     double maxScore = -100000000;
 
     for (Node *child : children) {
@@ -144,9 +143,9 @@ BaseObject *TienLenNode::getMostVisitedChildMove() {
 }
 
 double TienLenNode::getUCT() {
-    double exploit = 1.0 * reward->getScoreForPlayer(currentPlayIndex) / visit;
-    double discover = C * sqrt(log(parent->getVisit()) / visit);
-    double balance = K / (K + visit);
+    double exploit = static_cast<double>(1.0 * reward->getScoreForPlayer(currentPlayIndex)) / static_cast<double>(visit);
+    double discover = C * sqrt(log(parent->getVisit()) / static_cast<double >(visit));
+    double balance = static_cast<double >(K) / static_cast<double >(K + visit);
     return exploit + discover + balance;
 }
 

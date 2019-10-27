@@ -18,7 +18,7 @@ using namespace std;
 
 class MonteCarloTreeSearch {
 private:
-    bool containsNoSet(const vector<BaseObject *> &objects) {
+    static bool containsNoSet(const vector<BaseObject *> &objects) {
         for (BaseObject *object : objects) {
             if (dynamic_cast<Card *>(object) != nullptr) continue;
             return false;
@@ -26,7 +26,7 @@ private:
         return true;
     }
 
-    BaseObject *getReducedMove(Game *game) {
+    static BaseObject *getReducedMove(Game *game) {
         vector<BaseObject *> list = game->getAvailableMoves();
         bool no_set = containsNoSet(list);
         if (!no_set) return nullptr;
@@ -56,7 +56,7 @@ public:
         root->setC(configuration->C);
         root->setK(configuration->K);
         if (configuration->usingK) root->usingK();
-        std::chrono::milliseconds start = Util::currentTimeMillis();
+        long start = Util::currentTimeMillis();
         int count = 0;
         while (iterations > 0 && Util::currentTimeMillis() - start < configuration->maxTime) {
             iterations--;
@@ -80,14 +80,14 @@ public:
         }
         /* debug */
         if (configuration->debug) {
-            std::cout << "MCTS iterations count: " + std::to_string(count) + ", reward: " +
-                         root->getReward()->toString() + ", visited: " +
-                         std::to_string(root->getVisit());
+            Util::println("MCTS iterations count: " + std::to_string(count) + ", reward: " +
+                          root->getReward()->toString() + ", visited: " +
+                          std::to_string(root->getVisit()));
             root->printChildren();
         }
 
         return root->getMostVisitedChildMove();
     }
-}
+};
 
 #endif //MPIPROJECT_MONTECARLOTREESEARCH_H

@@ -14,6 +14,10 @@ class Filter {
 public:
     static vector<BaseObject *> removeUnnecessarySequences(const vector<BaseObject *> &sequences) {
         bool *checked = new bool[sequences.size()];
+        for(int i = 0; i < sequences.size(); i++) {
+            checked[i] = false;
+        }
+
         vector<BaseObject *> out;
 
         for (int i = 0; i < sequences.size(); i++) {

@@ -34,13 +34,13 @@ public:
     }
 
     bool beats(BaseObject *object) override {
-        if (dynamic_cast<TripSequence *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_tripseq) {
             auto *sequence = (TripSequence *) object;
             if (this->minValue > sequence->minValue) return true;
             if (this->minValue < sequence->minValue) return false;
             return this->maxType > sequence->maxType;
         }
-        if (dynamic_cast<Card *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_card) {
             return ((Card *) object)->card->getValue() == BaseCard::TWO;
         }
         return false;
@@ -50,8 +50,21 @@ public:
         return new TripSequence((Dub *) dub1->getCopy(), (Dub *) dub2->getCopy(), (Dub *) dub3->getCopy());
     }
 
+    bool equals(BaseObject *object) override {
+        if(object->classCode() == BaseObject::code_tripseq) {
+            auto *sequence = (TripSequence *) object;
+            return this->dub1->equals(sequence->dub1) &&
+            this->dub2->equals(sequence->dub2) &&
+            this->dub3->equals(sequence->dub3);
+        }
+    }
+
     std::string toString() override {
         return "{" + dub1->toString() + " " + dub2->toString() + " " + dub3->toString() + "}";
+    }
+
+    int classCode() override{
+        return BaseObject::code_tripseq;
     }
 
     static bool valid(Dub *dub1, Dub *dub2, Dub *dub3) {

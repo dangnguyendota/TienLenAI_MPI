@@ -30,7 +30,7 @@ public:
     }
 
     bool beats(BaseObject *object) override {
-        if (dynamic_cast<DubSequence *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_dubseq) {
             auto *sequence = (DubSequence *) object;
             if (this->minValue > sequence->minValue) return true;
             if (this->minValue < sequence->minValue) return false;
@@ -45,7 +45,7 @@ public:
     }
 
     bool equals(BaseObject *object) override {
-        if (dynamic_cast<DubSequence *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_dubseq) {
             auto *sequence = (DubSequence *) object;
             return this->dub1->equals(sequence->dub1) && this->dub2->equals(sequence->dub2);
         }
@@ -54,6 +54,10 @@ public:
 
     std::string toString() override {
         return "{" + dub1->toString() + " " + dub2->toString() + "}";
+    }
+
+    int classCode() override{
+        return BaseObject::code_dubseq;
     }
 
     static bool valid(Dub *dub1, Dub *dub2) {

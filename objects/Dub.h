@@ -34,7 +34,7 @@ public:
     }
 
     bool beats(BaseObject *object) override {
-        if (dynamic_cast<Dub *> (object) != nullptr) {
+        if (object->classCode() == BaseObject::code_dub) {
             Dub *dub = (Dub *) object;
             if (value > dub->value) return true;
             if (value < dub->value) return false;
@@ -53,11 +53,15 @@ public:
     }
 
     bool equals(BaseObject *object) override {
-        if (dynamic_cast<Dub *> (object) != nullptr) {
+        if (object->classCode() == BaseObject::code_dub) {
             Dub *dub = (Dub *) object;
             return dub->card1->equals(card1) && dub->card2->equals(card2);
         }
         return false;
+    }
+
+    int classCode() override{
+        return BaseObject::code_dub;
     }
 
     static void sort(std::vector<BaseObject *> *dubs) {

@@ -17,7 +17,7 @@ public:
     int compareTo(Card *card);
 
     bool equals(BaseObject *object) override {
-        if (dynamic_cast<Card *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_card) {
             Card *c = (Card *) object;
             return c->card->equals(this->card);
         }
@@ -31,7 +31,7 @@ public:
     }
 
     bool beats(BaseObject *object) override {
-        if (dynamic_cast<Card *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_card) {
             Card *c = (Card *) object;
             if (c->card->getValue() > card->getValue()) return false;
             if (c->card->getValue() < card->getValue()) return true;
@@ -47,6 +47,10 @@ public:
 
     std::string toString() override {
         return this->card->toString();
+    }
+
+    int classCode() override{
+        return BaseObject::code_card;
     }
 
     static void sort(std::vector<Card *> *cards) {

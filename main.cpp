@@ -1,6 +1,9 @@
 #include <iostream>
 #include <algorithm>
+#include <ctime>
 #include "objects/Card.h"
+#include "helper/Util.h"
+#include "test/Test.h"
 
 int main()
 {
@@ -17,7 +20,10 @@ int main()
 //    BaseCard *baseCard = new BaseCard("10♥");
 //    std::string str = "J♥";
 //    std::cout << baseCard->toString();
-    int a[7];
-    std::cout << "Length of array = " << (sizeof(a)/sizeof(*a)) << std::endl;
+//    long start = Util::currentTimeMillis();
+//    while (Util::currentTimeMillis() - start < 5000) {
+//    }
+//    std::cout << (Util::currentTimeMillis() - start) << std::endl;
+    Test::playSolo();
     return 0;
 }

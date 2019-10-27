@@ -12,7 +12,7 @@
 class GameReward : public Reward {
 private:
     std::vector<double> score;
-    int max;
+    int max = 0;
 public:
     GameReward(int max);
 

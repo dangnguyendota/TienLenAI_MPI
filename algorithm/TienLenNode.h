@@ -16,13 +16,13 @@ using namespace std;
 
 class TienLenNode : public Node {
 private:
-    Node *parent;
-    BaseObject *move;
+    Node *parent = nullptr;
+    BaseObject *move = nullptr;
     vector<Node *> children;
     vector<BaseObject *> unexploredMoves;
-    Reward *reward;
-    int visit;
-    int currentPlayIndex;
+    Reward *reward = nullptr;
+    int visit = 0;
+    int currentPlayIndex = 0;
     double C = sqrt(2.0);
     double K = 0;
     bool usingKK = false;
@@ -55,6 +55,19 @@ public:
 
     void setK(double k) override;
 
+    void printChildren() override {
+        std::string info;
+        for(Node *node : children){
+            auto *tienLenNode = (TienLenNode*) node;
+            info += "Node " + tienLenNode->getMove()->toString();
+            info += "|";
+            info += "visit " + std::to_string(tienLenNode->visit);
+            info += "|";
+            info += "reward " + std::to_string(tienLenNode->reward->getScoreForPlayer(tienLenNode->currentPlayIndex) / tienLenNode->visit);
+            info += "\n";
+        }
+        Util::println(info);
+    }
 
 private:
     void removeUnintelligibleMoves();

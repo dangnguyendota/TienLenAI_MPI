@@ -35,7 +35,7 @@ public:
 
     bool beats(BaseObject *object) override {
         if (dynamic_cast<Trips *>(object) != nullptr) {
-            Trips *trips = (Trips *) object;
+            auto *trips = (Trips *) object;
             return this->value > trips->value;
         }
         return false;
@@ -47,7 +47,7 @@ public:
 
     bool equals(BaseObject *object) override {
         if (dynamic_cast<Trips *>(object) != nullptr) {
-            Trips *trips = (Trips *) object;
+            auto *trips = (Trips *) object;
             return this->card1->equals(trips->card1) && this->card2->equals(trips->card2) &&
                    this->card3->equals(trips->card3);
         }
@@ -56,6 +56,10 @@ public:
 
     std::string toString() override {
         return "{" + card1->toString() + " " + card2->toString() + " " + card3->toString() + "}";
+    }
+
+    int classCode() override{
+        return BaseObject::code_trip;
     }
 
     static void sort(std::vector<BaseObject *> *trips) {

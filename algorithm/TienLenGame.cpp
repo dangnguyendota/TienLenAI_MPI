@@ -7,6 +7,7 @@
 #include "../objects/Pass.h"
 #include "GameReward.h"
 #include "../base/GameConfig.h"
+#include "../helper/Util.h"
 
 void TienLenGame::increaseIndex() {
     if (currentPlayer == maxPlayer - 1) currentPlayer = 0;
@@ -14,17 +15,16 @@ void TienLenGame::increaseIndex() {
 }
 
 TienLenGame::TienLenGame(GameConfiguration *config) {
-    this->maxPlayer = configuration->maxPlayer;
+    this->maxPlayer = config->maxPlayer;
     this->passed.clear();
-    for (int i = 0; i < configuration->maxPlayer; i++) this->passed.push_back(configuration->passed[i]);
-    this->lastDealt = configuration->lastDealt;
-    this->previousPlayer = configuration->previousPlayer;
-    this->currentPlayer = configuration->currentPlayer;
-    this->setConfig(configuration);
+    for (int i = 0; i < config->maxPlayer; i++) this->passed.push_back(config->passed[i]);
+    this->lastDealt = config->lastDealt;
+    this->previousPlayer = config->previousPlayer;
+    this->currentPlayer = config->currentPlayer;
+    this->configuration = config;
     this->sizee = 0;
-    for (int i = 0; i < maxPlayer; i++) this->players.push_back(nullptr);
     this->scanned = false;
-    this->first = configuration->first_turn;
+    this->first = config->first_turn;
     this->ply = 0;
 }
 
@@ -69,8 +69,9 @@ int TienLenGame::getMaxPlayer() {
 
 Game *TienLenGame::getCopy() {
     auto *game = new TienLenGame(configuration);
+    game->players.clear();
     for (int i = 0; i < maxPlayer; i++) {
-        game->players[i] = this->players[i]->getCopy();
+        game->players.push_back(this->players[i]->getCopy());
     }
     game->scanned = scanned;
     game->first = configuration->first_turn;
@@ -160,15 +161,10 @@ Reward *TienLenGame::getReward() {
 
 void TienLenGame::put(Player *player) {
     if (scanned) throw std::invalid_argument("Can not put player because the game is started");
-    for (int i = 0; i < maxPlayer; i++) {
-        if (players[i] == nullptr) {
-            player->setIndex(i);
-            player->scan();
-            players[i] = player;
-            sizee++;
-            break;
-        }
-    }
+    player->setIndex(this->players.size());
+    player->scan();
+    this->players.push_back(player);
+    sizee++;
     if (sizee == maxPlayer) scan();
 }
 
@@ -188,7 +184,7 @@ void TienLenGame::next() {
     this->increaseIndex();
     while (passed[currentPlayer]) increaseIndex();
     if (currentPlayer == previousPlayer) {
-        for (auto &&i : passed) {
+        for(auto && i : passed) {
             i = false;
         }
     }

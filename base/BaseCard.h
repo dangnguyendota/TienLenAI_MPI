@@ -53,6 +53,8 @@ public:
     static std::vector<BaseCard *> randomCards(std::vector<BaseCard *> container, int length);
 
     static void sort(std::vector<BaseCard *> *sequence);
+
+    static std::vector<BaseCard *> removeFrom(const std::vector<BaseCard *>& container, const std::vector<BaseCard *>& removed);
 };
 
 

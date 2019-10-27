@@ -70,6 +70,10 @@ public:
         return str;
     }
 
+    int classCode() override{
+        return BaseObject::code_seq;
+    }
+
     static bool valid(std::vector<BaseCard *> cards) {
         if (cards.size() <= 2) return false;
         if (cards[cards.size() - 1]->getValue() == BaseCard::TWO) return false;

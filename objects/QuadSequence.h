@@ -71,6 +71,10 @@ public:
         return "{" + dub1->toString() + " " + dub2->toString() + " " + dub3->toString() + " " + dub4->toString() + "}";
     }
 
+    int classCode() override{
+        return BaseObject::code_quadseq;
+    }
+
     static bool valid(Dub *dub1, Dub *dub2, Dub *dub3, Dub *dub4) {
         if (dub4->getValue() == BaseCard::TWO) return false;
         return dub1->getValue() + 1 == dub2->getValue() &&

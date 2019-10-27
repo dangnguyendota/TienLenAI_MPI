@@ -28,8 +28,12 @@ public:
         return "Pass";
     }
 
+    int classCode() override{
+        return BaseObject::code_pass;
+    }
+
     bool equals(BaseObject *object) override {
-        return dynamic_cast<Pass *> (object) != nullptr;
+        return object->classCode() == BaseObject::code_pass;
     }
 };
 

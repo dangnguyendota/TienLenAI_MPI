@@ -16,20 +16,20 @@ using namespace std;
 class TienLenGame : public Game {
 private:
     vector<Player *> players;
-    Reward *reward;
-    int maxPlayer;
-    int sizee;
-    int currentPlayer;
-    bool scanned; // not important
-    int previousPlayer;
-    BaseObject *lastDealt;
+    Reward *reward = nullptr;
+    int maxPlayer = 0;
+    int sizee = 0;
+    int currentPlayer = 0;
+    bool scanned = false; // not important
+    int previousPlayer = 0;
+    BaseObject *lastDealt = nullptr;
     vector<bool> passed;
-    GameConfiguration *configuration;
+    GameConfiguration *configuration = nullptr;
     bool first = false;
     bool endd = false;
-    int ply;
+    int ply = 0;
 public:
-    TienLenGame(GameConfiguration *config);
+    explicit TienLenGame(GameConfiguration *config);
 
     void move(BaseObject *object) override;
 
