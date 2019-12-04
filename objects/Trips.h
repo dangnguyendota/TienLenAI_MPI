@@ -34,7 +34,7 @@ public:
     }
 
     bool beats(BaseObject *object) override {
-        if (dynamic_cast<Trips *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_trip) {
             auto *trips = (Trips *) object;
             return this->value > trips->value;
         }
@@ -46,7 +46,7 @@ public:
     }
 
     bool equals(BaseObject *object) override {
-        if (dynamic_cast<Trips *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_trip) {
             auto *trips = (Trips *) object;
             return this->card1->equals(trips->card1) && this->card2->equals(trips->card2) &&
                    this->card3->equals(trips->card3);

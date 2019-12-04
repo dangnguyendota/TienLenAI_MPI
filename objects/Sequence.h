@@ -32,7 +32,7 @@ public:
     }
 
     bool beats(BaseObject *object) override {
-        if (dynamic_cast<Sequence *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_seq) {
             auto *sequence = (Sequence *) object;
             if (cards.size() != sequence->cards.size()) return false;
             if (!homogeneity && sequence->homogeneity) return false;
@@ -49,7 +49,7 @@ public:
     }
 
     bool equals(BaseObject *object) override {
-        if (dynamic_cast<Sequence *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_seq) {
             auto *sequence = (Sequence *) object;
             if (sequence->cards.size() != this->cards.size()) return false;
             for (int i = 0; i < this->cards.size(); i++) {

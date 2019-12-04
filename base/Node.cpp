@@ -63,3 +63,7 @@ double Node::getC() {
 Reward *Node::getReward() {
     return nullptr;
 }
+
+std::string Node::getNodeStr() {
+    return std::__cxx11::string();
+}

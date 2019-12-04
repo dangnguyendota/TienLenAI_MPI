@@ -38,6 +38,8 @@ public:
     virtual void usingK();
 
     virtual void setK(double K);
+
+    virtual std::string getNodeStr();
 };
 
 #endif //MPIPROJECT_NODE_H

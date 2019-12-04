@@ -47,16 +47,16 @@ public:
     }
 
     static BaseObject *deleteElement(int index, std::vector<BaseObject *> &vector) {
-        if (0 > index || index >= vector.size())
-            throw std::invalid_argument("Index out of ranger " + std::to_string(index));
+//        if (0 > index || index >= vector.size())
+//            throw std::invalid_argument("Index out of ranger " + std::to_string(index));
         BaseObject *o = vector[index];
         vector.erase(vector.begin() + index);
         return o;
     }
 
     static BaseCard *deleteElement(int index, std::vector<BaseCard *> &vector) {
-        if (index < 0 || index >= vector.size())
-            throw std::invalid_argument("Index out of ranger " + std::to_string(index));
+//        if (index < 0 || index >= vector.size())
+//            throw std::invalid_argument("Index out of ranger " + std::to_string(index));
         BaseCard *o = vector[index];
         vector.erase(vector.begin() + index);
         return o;

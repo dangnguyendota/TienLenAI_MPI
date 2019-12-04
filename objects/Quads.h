@@ -33,9 +33,9 @@ public:
 
     bool beats(BaseObject *object) override {
         if (object->classCode() == BaseObject::code_quad) return this->value > ((Quads *) object)->value;
-        if (dynamic_cast<TripSequence *>(object) != nullptr) return true;
-        if (dynamic_cast<Dub *>(object) != nullptr) return ((Dub *) object)->getValue() == BaseCard::TWO;
-        if (dynamic_cast<Card *>(object) != nullptr) return ((Card *) object)->card->getValue() == BaseCard::TWO;
+        if (object->classCode() == BaseObject::code_tripseq) return true;
+        if (object->classCode() == BaseObject::code_dub) return ((Dub *) object)->getValue() == BaseCard::TWO;
+        if (object->classCode() == BaseObject::code_card) return ((Card *) object)->card->getValue() == BaseCard::TWO;
         return false;
     }
 

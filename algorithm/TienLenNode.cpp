@@ -8,7 +8,7 @@
 #include "../base/GameConfig.h"
 #include "TienLenPlayer.h"
 
-TienLenNode::TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game *game) {
+TienLenNode::TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game *game, int move_index) {
     this->move = move;
     this->parent = parent;
     this->currentPlayIndex = player;
@@ -18,6 +18,7 @@ TienLenNode::TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game
         this->C = parent->getC();
         this->usingKK = parent->usingKK;
         this->K = parent->K;
+        this->node_str = parent->node_str + "." + to_string(move_index);
     }
     /* load moves */
     vector<BaseObject *> list = game->getAvailableMoves();
@@ -43,12 +44,12 @@ void TienLenNode::removeUnintelligibleMoves() {
     vector<BaseObject *> rmList;
     bool containsTwo = false;
     for (BaseObject *o : this->unexploredMoves) {
-        if (!containsTwo && (dynamic_cast<Card *>(o) != nullptr)) {
+        if (!containsTwo && (o->classCode() == BaseObject::code_card)) {
             if (((Card *) o)->card->getValue() == BaseCard::TWO) containsTwo = true;
         }
 
-        if ((dynamic_cast<Quads *>(o) != nullptr) || (dynamic_cast<QuadSequence *>(o) != nullptr) ||
-            (dynamic_cast<TripSequence *>(o) != nullptr)) {
+        if ((o->classCode() == BaseObject::code_quad) || (o->classCode() == BaseObject::code_quadseq) ||
+            (o->classCode() == BaseObject::code_tripseq)) {
             rmList.push_back(o);
         }
     }
@@ -70,9 +71,9 @@ void TienLenNode::removeUnnecessaryMoves(Game *game) {
     auto *player = (TienLenPlayer *) game->getCurrentPlayer();
     vector<BaseObject *> rmList;
     for (BaseObject *o : this->unexploredMoves) {
-        if (((dynamic_cast<TripSequence *>(o) != nullptr) && player->getCardLength() > 7) ||
-            ((dynamic_cast<QuadSequence *>(o) != nullptr) && player->getCardLength() > 9) ||
-            (dynamic_cast<Quads *>(o) != nullptr) || (o->contains(BaseCard::TWO))) {
+        if (((o->classCode() == BaseObject::code_tripseq) && player->getCardLength() > 7) ||
+            ((o->classCode() == BaseObject::code_quadseq) && player->getCardLength() > 9) ||
+            (o->classCode() == BaseObject::code_quad) || (o->contains(BaseCard::TWO))) {
             rmList.push_back(o);
         }
     }
@@ -110,7 +111,7 @@ Node *TienLenNode::expand(Game *game) {
     BaseObject *object = Util::deleteElement(rd, this->unexploredMoves);
     int player = game->getCurrentPlayerIndex();
     game->move(object);
-    Node *node = new TienLenNode(this, object, player, game);
+    Node *node = new TienLenNode(this, object, player, game, rd);
     this->children.push_back(node);
     return node;
 }
@@ -175,6 +176,10 @@ void TienLenNode::usingK() {
 
 void TienLenNode::setK(double k) {
     this->K = k;
+}
+
+string TienLenNode::getNodeStr() {
+    return this->node_str;
 }
 
 

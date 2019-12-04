@@ -13,6 +13,7 @@
 #include "../objects/Pass.h"
 #include "../base/Node.h"
 #include "TienLenNode.h"
+#include "mpi.h"
 
 using namespace std;
 
@@ -44,6 +45,10 @@ private:
 
 public:
     BaseObject *selectMove(Game *game, MctsPlayerConfiguration *configuration) {
+        MPI_Init();
+        MPI_Comm_size(MPI_COMM_WORLD, &numproc);
+        MPI_Comm_rank(MPI_COMM_WORLD, &myid);
+
         int iterations = configuration->iterations;
         /* check must move */
         vector<BaseObject *> list = game->getAvailableMoves();
@@ -52,7 +57,7 @@ public:
         BaseObject *object = getReducedMove(game);
         if (object != nullptr) return object;
         /* algorithm */
-        Node *root = new TienLenNode(nullptr, nullptr, -1, game);
+        Node *root = new TienLenNode(nullptr, nullptr, -1, game, -1);
         root->setC(configuration->C);
         root->setK(configuration->K);
         if (configuration->usingK) root->usingK();
@@ -74,10 +79,13 @@ public:
             Game *copy = game->getCopy();
             Node *node = root->select(copy);
             node = node->expand(copy);
+            Util::println(node->getNodeStr());
             Reward *reward = node->simulate(copy);
             node->backPropagation(reward);
             count++;
         }
+
+        MPI_Finalize();
         /* debug */
         if (configuration->debug) {
             Util::println("MCTS iterations count: " + std::to_string(count) + ", reward: " +

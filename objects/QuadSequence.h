@@ -38,16 +38,16 @@ public:
     }
 
     bool beats(BaseObject *object) override {
-        if (dynamic_cast<QuadSequence *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_quadseq) {
             auto *sequence = (QuadSequence *) object;
             if (this->minValue > sequence->minValue) return true;
             if (this->minValue < sequence->minValue) return false;
             return this->maxType > sequence->maxType;
         }
-        if (dynamic_cast<Quads *>(object) != nullptr) return true;
-        if (dynamic_cast<TripSequence *>(object) != nullptr) return true;
-        if (dynamic_cast<Dub *>(object) != nullptr) return ((Dub *) object)->getValue() == BaseCard::TWO;
-        if (dynamic_cast<Card *>(object) != nullptr) return ((Card *) object)->card->getValue() == BaseCard::TWO;
+        if (object->classCode() == BaseObject::code_quad) return true;
+        if (object->classCode() == BaseObject::code_tripseq) return true;
+        if (object->classCode() == BaseObject::code_dub) return ((Dub *) object)->getValue() == BaseCard::TWO;
+        if (object->classCode() == BaseObject::code_card) return ((Card *) object)->card->getValue() == BaseCard::TWO;
         return false;
     }
 
@@ -57,7 +57,7 @@ public:
     }
 
     bool equals(BaseObject *object) override {
-        if (dynamic_cast<QuadSequence *>(object) != nullptr) {
+        if (object->classCode() == BaseObject::code_quadseq) {
             auto *sequence = (QuadSequence *) object;
             return this->dub1->equals(sequence->dub1) &&
                    this->dub2->equals(sequence->dub2) &&

@@ -7,8 +7,8 @@
 
 
 #include "../base/Node.h"
-#include "math.h"
 #include "GameReward.h"
+#include "math.h"
 #include "../helper/Util.h"
 #include "../objects/Pass.h"
 
@@ -27,7 +27,10 @@ private:
     double K = 0;
     bool usingKK = false;
 public:
-    TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game *game);
+    string node_str = "";
+public:
+
+    TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game *game, int move_index);
 
     Node *select(Game *game) override;
 
@@ -55,15 +58,18 @@ public:
 
     void setK(double k) override;
 
+    string getNodeStr() override;
+
     void printChildren() override {
         std::string info;
-        for(Node *node : children){
-            auto *tienLenNode = (TienLenNode*) node;
+        for (Node *node : children) {
+            auto *tienLenNode = (TienLenNode *) node;
             info += "Node " + tienLenNode->getMove()->toString();
             info += "|";
             info += "visit " + std::to_string(tienLenNode->visit);
             info += "|";
-            info += "reward " + std::to_string(tienLenNode->reward->getScoreForPlayer(tienLenNode->currentPlayIndex) / tienLenNode->visit);
+            info += "reward " + std::to_string(
+                    tienLenNode->reward->getScoreForPlayer(tienLenNode->currentPlayIndex) / tienLenNode->visit);
             info += "\n";
         }
         Util::println(info);
