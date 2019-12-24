@@ -13,6 +13,8 @@ public:
 
     virtual Node *expand(Game *game);
 
+    virtual Node *expandFrom(Game *game, std::string basicString);
+
     virtual Reward *simulate(Game *game);
 
     virtual void backPropagation(Reward *reward);
@@ -40,6 +42,8 @@ public:
     virtual void setK(double K);
 
     virtual std::string getNodeStr();
+
+    virtual int getMoveIndex();
 };
 
 #endif //MPIPROJECT_NODE_H

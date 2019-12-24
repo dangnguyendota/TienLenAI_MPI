@@ -8,6 +8,7 @@
 
 #include <string>
 #include <algorithm>
+#include "vector"
 
 class BaseCard {
 public:

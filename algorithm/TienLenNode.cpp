@@ -8,7 +8,7 @@
 #include "../base/GameConfig.h"
 #include "TienLenPlayer.h"
 
-TienLenNode::TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game *game, int move_index) {
+TienLenNode::TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game *game) {
     this->move = move;
     this->parent = parent;
     this->currentPlayIndex = player;
@@ -18,7 +18,9 @@ TienLenNode::TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game
         this->C = parent->getC();
         this->usingKK = parent->usingKK;
         this->K = parent->K;
-        this->node_str = parent->node_str + "." + to_string(move_index);
+        this->node_str = parent->node_str + "." + to_string(move->getIndex());
+    } else {
+        this->node_str = "-1";
     }
     /* load moves */
     vector<BaseObject *> list = game->getAvailableMoves();
@@ -37,6 +39,10 @@ TienLenNode::TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game
 
             if (parent == nullptr) removeUnintelligibleMoves();
         }
+    }
+
+    for(int i = 0; i < this->unexploredMoves.size(); i++) {
+        this->unexploredMoves[i]->setIndex(i);
     }
 }
 
@@ -111,9 +117,38 @@ Node *TienLenNode::expand(Game *game) {
     BaseObject *object = Util::deleteElement(rd, this->unexploredMoves);
     int player = game->getCurrentPlayerIndex();
     game->move(object);
-    Node *node = new TienLenNode(this, object, player, game, rd);
+    Node *node = new TienLenNode(this, object, player, game);
     this->children.push_back(node);
     return node;
+}
+
+Node *TienLenNode::expandFrom(Game *game, std::string basicString) {
+    if (this->unexploredMoves.empty()) return this;
+    std::vector<std::string> nodes = Util::splitFirst(basicString, ".");
+    if(nodes.empty()) return this;
+    if(nodes[0] == "-1") {
+        if (nodes.size() == 1) return this;
+        return this->expandFrom(game, nodes[1]);
+    }
+    int node_int = std::stoi(nodes[0]);
+    if(nodes.size() == 1) {
+        for(int i = 0; i < this->unexploredMoves.size(); i++) {
+            if(this->unexploredMoves[i]->getIndex() != node_int) continue;
+            BaseObject *object = Util::deleteElement(i, this->unexploredMoves);
+            int player = game->getCurrentPlayerIndex();
+            game->move(object);
+            Node *node = new TienLenNode(this, object, player, game);
+            this->children.push_back(node);
+            return node;
+        }
+    } else {
+        for(Node *node : this->children) {
+            if(node->getMoveIndex() == node_int) {
+                return node->expandFrom(game, nodes[1]);
+            }
+        }
+    }
+    return nullptr;
 }
 
 Reward *TienLenNode::simulate(Game *game) {
@@ -181,5 +216,6 @@ void TienLenNode::setK(double k) {
 string TienLenNode::getNodeStr() {
     return this->node_str;
 }
+
 
 

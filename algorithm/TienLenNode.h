@@ -30,11 +30,13 @@ public:
     string node_str = "";
 public:
 
-    TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game *game, int move_index);
+    TienLenNode(TienLenNode *parent, BaseObject *move, int player, Game *game);
 
     Node *select(Game *game) override;
 
     Node *expand(Game *game) override;
+
+    Node *expandFrom(Game *game, std::string basicString) override;
 
     Reward *simulate(Game *game) override;
 
@@ -73,6 +75,10 @@ public:
             info += "\n";
         }
         Util::println(info);
+    }
+
+    int getMoveIndex() override {
+        return this->move->getIndex();
     }
 
 private:

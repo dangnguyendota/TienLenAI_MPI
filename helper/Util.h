@@ -113,6 +113,26 @@ public:
         return tokens;
     }
 
+    static std::vector<std::string> splitFirst(const std::string& str, const std::string& delim)
+    {
+        std::vector<std::string> tokens;
+        size_t prev = 0, pos = 0;
+        pos = str.find(delim, prev);
+        if (pos == std::string::npos) {
+            tokens.push_back(str);
+            return tokens;
+        }
+        std::string first = str.substr(prev, pos-prev);
+        std::string second = str.substr(pos-prev+1, str.length());
+        if (!first.empty()) {
+            tokens.push_back(first);
+        }
+        if(!second.empty()) {
+            tokens.push_back(second);
+        }
+        return tokens;
+    }
+
     static std::string vectorToString(const std::vector<BaseCard *>& vector) {
         std::string str = "[";
         for(BaseCard *card : vector) {
@@ -150,6 +170,7 @@ public:
         std::getline(std::cin, tmp);
         return std::atoi(tmp.c_str());
     }
+
 };
 
 

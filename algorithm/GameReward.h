@@ -24,6 +24,8 @@ public:
 
     Reward *getCopy() override;
 
+    Reward *add(std::string reward_str) override;
+
     std::string toString() override;
 };
 

@@ -24,3 +24,8 @@ double Reward::getScoreForPlayer(int index) {
     return 0;
 }
 
+Reward *Reward::add(std::string reward_str) {
+    return nullptr;
+}
+
+

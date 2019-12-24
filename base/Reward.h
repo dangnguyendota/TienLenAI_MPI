@@ -15,6 +15,8 @@ public:
 
     virtual Reward *getCopy();
 
+    virtual Reward *add(std::string reward_str);
+
     virtual std::string toString();
 
     virtual double getScoreForPlayer(int index);

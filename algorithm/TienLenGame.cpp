@@ -31,7 +31,7 @@ TienLenGame::TienLenGame(GameConfiguration *config) {
 void TienLenGame::move(BaseObject *object) {
     this->ply++;
     if (first) first = false;
-    if (dynamic_cast<Pass *>(object) != nullptr) {
+    if (object->classCode() == BaseObject::code_pass) {
         if (currentPlayer == previousPlayer) throw std::invalid_argument("Current player can not pass");
         passed[currentPlayer] = true;
         this->next();

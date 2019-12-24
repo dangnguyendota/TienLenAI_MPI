@@ -3,6 +3,7 @@
 //
 
 #include "GameReward.h"
+#include "../helper/Util.h"
 
 GameReward::GameReward(int max) {
     this->max = max;
@@ -34,11 +35,19 @@ Reward *GameReward::getCopy() {
 }
 
 std::string GameReward::toString() {
-    std::string str = "(";
+    std::string str = "";
     for (int i = 0; i < max; i++) {
         str += std::to_string(score[i]);
-        if (i != max - 1) str += ", ";
+        if (i != max - 1) str += "_";
     }
-    str += ")";
     return str;
+}
+
+//TODO
+Reward *GameReward::add(std::string reward_str) {
+    std::vector<std::string> s = Util::split(reward_str, "_");
+    for(int i = 0; i < max; i++) {
+        this->score[i] += std::stod(s[i]);
+    }
+    return Reward::add(reward_str);
 }

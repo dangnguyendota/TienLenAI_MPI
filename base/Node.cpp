@@ -67,3 +67,12 @@ Reward *Node::getReward() {
 std::string Node::getNodeStr() {
     return std::__cxx11::string();
 }
+
+Node *Node::expandFrom(Game *game, std::string basicString) {
+    return nullptr;
+}
+
+int Node::getMoveIndex() {
+    return -1;
+}
+

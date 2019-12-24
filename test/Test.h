@@ -59,6 +59,7 @@ public:
         deck = BaseCard::removeFrom(deck, player3Card);
         vector<BaseCard *> player4Card = BaseCard::randomCards(deck, 13);
 
+        string gameInput = "2|1|0.0|null|2♥, 3♥, 2♣, 4♥, 5♥, 6♣, 7♣, 8♠, J♦, 9♦, 10♠, K♣, Q♥_10♥, 10♦, K♦, K♥, Q♠, A♦, 9♥|";
         player1Card = from("2♥, 3♥, 2♣, 4♥, 5♥, 6♣, 7♣, 8♠, J♦, 9♦, 10♠, K♣, Q♥");
         player2Card = from("10♥, 10♦, K♦, K♥, Q♠, A♦, 9♥");
 
@@ -125,6 +126,7 @@ public:
         while (!game->end()) {
             int index = game->getCurrentPlayerIndex();
             if (index == 0) {
+                return;
                 Util::println("Player " + Util::vectorToString(getCards(game->getCurrentPlayer())));
                 Util::println("your turn, please choose one: ");
                 vector<BaseObject *> objects = game->getAvailableMoves();

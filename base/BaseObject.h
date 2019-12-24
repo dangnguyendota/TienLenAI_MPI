@@ -22,6 +22,8 @@ public:
     static const int code_dubseq = 8;
     static const int code_tripseq = 9;
     static const int code_quadseq = 10;
+private:
+    int my_index = -1;
 public:
     virtual std::vector<BaseCard *> getCards();
 
@@ -38,6 +40,14 @@ public:
     virtual std::string toString();
 
     virtual int classCode();
+
+    void setIndex(int index) {
+        this->my_index = index;
+    }
+
+    int getIndex() {
+        return this->my_index;
+    }
 
 };
 
