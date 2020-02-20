@@ -6,7 +6,6 @@
 #define MPIPROJECT_DUB_H
 
 
-#include <algorithm>
 #include "../base/BaseObject.h"
 
 class Dub : public BaseObject {

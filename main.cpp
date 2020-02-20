@@ -153,6 +153,7 @@ int main(int arg_num, char **args) {
     MPI::Status status;
     int receive_buffer_size = 10000;
     char buffer[receive_buffer_size];
+    long time_communication = 0;
 
     int numproc, myid;
     MPI_Init(NULL, NULL);
@@ -181,6 +182,7 @@ int main(int arg_num, char **args) {
             Reward *reward = new GameReward(copy->getConfig()->maxPlayer);
             // send node path to slaves
             std::string node_str = node->getNodeStr();
+            long ss = Util::currentTimeMillis();
             for (int s = 1; s < numproc; s++) {
                 MPI_Send(node_str.c_str(), node_str.size() + 1, MPI_CHAR, s, 0, MPI_COMM_WORLD);
             }
@@ -192,6 +194,7 @@ int main(int arg_num, char **args) {
                 // add received reward from slave to master's reward
                 reward->add(reward_str);
             }
+            time_communication += Util::currentTimeMillis() - ss;
             node->backPropagation(reward);
         } else {
             // receive node path as string from master
@@ -218,6 +221,7 @@ int main(int arg_num, char **args) {
         }
         result = root->getMostVisitedChildMove();
         Util::println("Result: " + result->toString());
+        Util::println("Time: " + std::to_string(time_communication));
         /* debug */
         Util::println("MCTS iterations count: " + std::to_string(count) + ", reward: " +
                       root->getReward()->toString() + ", visited: " +
